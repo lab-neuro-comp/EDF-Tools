@@ -5,7 +5,7 @@ import "fmt"
 import "strings"
 import "strconv"
 import "github.com/ishiikurisu/edf"
-import "github.com/ishiikurisu/sst"
+import "github.com/lab-neuro-comp/SST/src/sst"
 
 func main() {
     for i := 1; i < len(os.Args); i++ {
