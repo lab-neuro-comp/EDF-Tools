@@ -51,12 +51,12 @@ func getFirstMoment(header map[string]string) int {
 }
 
 func createFirstLine(inlet string, moment int) string {
-    return fmt.Sprintf("%v\tRecord\t%v\n", inlet, sst.ConvertToTimeStamp(moment - 1))
+    return fmt.Sprintf("%v;Record;%v\n", inlet, sst.ConvertToTimeStamp(moment - 1))
 }
 
 func addendumToFirstLine(inlet string, header map[string]string) string {
     /* Cat Oriented Programming */
-    return fmt.Sprintf("%v\tTaxa de amostragem\t%v\n",
+    return fmt.Sprintf("%v;samplingrate;%v\n",
                        inlet,
                        edf.GetSampling(header))
 }
@@ -78,7 +78,7 @@ func createIthLine(inlet string, note string, start int) string {
         moment := sst.ConvertToTimeStamp(unixtime)
 
         // Building outlet
-        outlet = fmt.Sprintf("%v\t%v\t%v\n", inlet, annotation, moment)
+        outlet = fmt.Sprintf("%v;%v;%v\n", inlet, annotation, moment)
     }
 
     return outlet
