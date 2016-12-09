@@ -11,7 +11,7 @@ To Do
 - [x] Move applications to an `app` folder.
 - [x] Test `edf2csv`
 - [x] Test `edf2ascii`
-- [ ] Test `notes2csv`.
+- [x] Test `notes2csv`.
 - [x] Test `edfp2notes`.
 - [x] Test `csv2single`
 - [ ] Test `csv2multiple`.
