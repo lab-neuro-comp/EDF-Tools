@@ -6,6 +6,6 @@ import "github.com/ishiikurisu/edf"
 
 func main() {
     input := os.Args[1]
-    header, records := edf.ReadFile(input)
-    fmt.Println(edf.WriteCSV(header, records))
+    edfContents := edf.ReadFile(input)
+    fmt.Println(edfContents.WriteCSV())
 }

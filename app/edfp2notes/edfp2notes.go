@@ -5,7 +5,7 @@ import "fmt"
 import "github.com/ishiikurisu/edf"
 
 func main() {
-	header, records := edf.ReadFile(os.Args[1])
-	notes := edf.WriteNotes(header, records)
+	edfContents := edf.ReadFile(os.Args[1])
+	notes := edfContents.WriteNotes()
 	fmt.Printf("%v", notes)
 }
