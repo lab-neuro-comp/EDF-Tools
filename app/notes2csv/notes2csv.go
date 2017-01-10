@@ -12,13 +12,13 @@ func main() {
 		// Setting up environment
 		inlet := os.Args[i]
 		outlet := createOutlet(inlet)
-		header, records := edf.ReadFile(inlet)
-		notes := strings.Split(edf.WriteNotes(header, records), "\n")
+		edfStuff := edf.ReadFile(inlet)
+		notes := strings.Split(edfStuff.WriteNotes(), "\n")
 		lines := make([]string, len(notes) + 1)
-		firstMoment := getFirstMoment(header)
+		firstMoment := getFirstMoment(edfStuff.Header)
 
 		// populating lines to file
-		lines[0] = addendumToFirstLine(inlet, header) +
+		lines[0] = addendumToFirstLine(inlet, edfStuff) +
 		           createFirstLine(inlet, firstMoment)
 		for i, note := range notes {
 			lines[i+1] = createIthLine(inlet, note, firstMoment)
@@ -44,7 +44,7 @@ func getFirstMoment(header map[string]string) int {
 	startTime := header["starttime"]
 	dateRaw := strings.Split(startDate, ".")
 	timeRaw := strings.Split(startTime, ".")
-	timestamp := fmt.Sprintf("20%v-%v-%vT%v:%v:%vZ", 
+	timestamp := fmt.Sprintf("20%v-%v-%vT%v:%v:%vZ",
 	                         dateRaw[2], dateRaw[1], dateRaw[0],
 	                         timeRaw[0], timeRaw[1], timeRaw[2])
 	result := sst.ConvertToUnixTime(timestamp)
@@ -55,11 +55,11 @@ func createFirstLine(inlet string, moment int) string {
 	return fmt.Sprintf("%v;Record;%v\n", inlet, sst.ConvertToTimeStamp(moment - 1))
 }
 
-func addendumToFirstLine(inlet string, header map[string]string) string {
+func addendumToFirstLine(inlet string, edfStuff edf.Edf) string {
 	/* Cat Oriented Programming */
 	return fmt.Sprintf("%v;samplingrate;%v\n",
 	                   inlet,
-	                   edf.GetSampling(header))
+	                   edfStuff.GetSampling())
 }
 
 func createIthLine(inlet string, note string, start int) string {

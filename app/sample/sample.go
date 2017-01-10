@@ -47,7 +47,7 @@ func validFile(inlet string) bool {
 
 // Processes an EDF file, extracting the subject name and the sampling rate
 func process(inlet string, wg *sync.WaitGroup) {
-		edfHeader, _ := edf.ReadFile(inlet)
-		fmt.Printf("%s\t%s\t%s\n", inlet, edfHeader["patient"], edf.GetSampling(edfHeader))
+		edfContents := edf.ReadFile(inlet)
+		fmt.Printf("%s\t%s\t%s\n", inlet, edfContents.Header["patient"], edfContents.GetSampling())
 		wg.Done()
 }
